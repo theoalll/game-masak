@@ -39,6 +39,55 @@ const RECIPES = [
       { id: 'yogurt', name: 'Yogurt', weight: 50, emoji: '\u{1F95B}' },
     ],
   },
+  {
+    id: 'pisang-goreng',
+    name: 'Pisang Goreng',
+    emoji: '\u{1F34C}',
+    ingredients: [
+      { id: 'pisang', name: 'Pisang', weight: 100, emoji: '\u{1F34C}' },
+      { id: 'tepung', name: 'Tepung', weight: 30, emoji: '\u{1F33E}' },
+    ],
+  },
+  {
+    id: 'smoothie',
+    name: 'Smoothie Stroberi',
+    emoji: '\u{1F964}',
+    ingredients: [
+      { id: 'stroberi', name: 'Stroberi', weight: 150, emoji: '\u{1F353}' },
+      { id: 'yogurt', name: 'Yogurt', weight: 100, emoji: '\u{1F95B}' },
+    ],
+  },
+  {
+    id: 'telur-dadar',
+    name: 'Telur Dadar',
+    emoji: '\u{1F373}',
+    ingredients: [
+      { id: 'telur', name: 'Telur', weight: 60, emoji: '\u{1F95A}' },
+      { id: 'garam', name: 'Garam', weight: 5, emoji: '\u{1F9C2}' },
+    ],
+  },
+  {
+    id: 'nasi-goreng',
+    name: 'Nasi Goreng',
+    emoji: '\u{1F35A}',
+    ingredients: [
+      { id: 'nasi', name: 'Nasi', weight: 200, emoji: '\u{1F35A}' },
+      { id: 'telur', name: 'Telur', weight: 50, emoji: '\u{1F95A}' },
+      { id: 'wortel', name: 'Wortel', weight: 30, emoji: '\u{1F955}' },
+      { id: 'kecap', name: 'Kecap', weight: 10, emoji: '\u{1F3ED}' },
+    ],
+  },
+  {
+    id: 'kue-coklat',
+    name: 'Kue Coklat',
+    emoji: '\u{1F36B}',
+    ingredients: [
+      { id: 'tepung', name: 'Tepung', weight: 150, emoji: '\u{1F33E}' },
+      { id: 'gula', name: 'Gula', weight: 50, emoji: '\u{1F36C}' },
+      { id: 'mentega', name: 'Mentega', weight: 100, emoji: '\u{1F9C8}' },
+      { id: 'coklat', name: 'Coklat', weight: 30, emoji: '\u{1F36B}' },
+    ],
+  },
 ];
 
 const PRAISE_MESSAGES = [
