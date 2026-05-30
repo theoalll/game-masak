@@ -50,6 +50,105 @@ body{
   position:relative
 }
 
+/* === COVER SCREEN === */
+.cover-screen{position:relative;overflow:hidden}
+
+.cover-floaters{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:0
+}
+
+.cover-floater{
+  position:absolute;
+  top:-40px;
+  font-size:2rem;
+  animation:coverFloat linear infinite;
+  opacity:.5
+}
+
+@keyframes coverFloat{
+  0%{transform:translateY(0) rotate(0deg);opacity:0}
+  10%{opacity:.5}
+  90%{opacity:.5}
+  100%{transform:translateY(850px) rotate(360deg);opacity:0}
+}
+
+.cover-inner{z-index:1;position:relative}
+
+.cover-content{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  gap:16px;
+  padding:40px 20px
+}
+
+.cover-emojis{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  margin-bottom:8px
+}
+
+.cover-icon{
+  font-size:2.5rem;
+  opacity:.7
+}
+
+.cover-icon.main{
+  font-size:5rem;
+  opacity:1;
+  animation:coverBounce 2s ease-in-out infinite
+}
+
+@keyframes coverBounce{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-12px)}
+}
+
+.cover-title{
+  font-size:2.8rem;
+  font-weight:700;
+  color:var(--primary);
+  text-shadow:0 2px 10px rgba(255,107,107,.2)
+}
+
+.cover-subtitle{
+  font-size:1.1rem;
+  color:var(--text-light);
+  max-width:240px;
+  line-height:1.4
+}
+
+.btn-cover{
+  background:linear-gradient(135deg,var(--primary),#ff8a8a);
+  color:white;
+  border:none;
+  border-radius:var(--radius-full);
+  padding:18px 60px;
+  font-size:1.5rem;
+  font-weight:700;
+  font-family:'Fredoka',sans-serif;
+  cursor:pointer;
+  box-shadow:0 6px 25px rgba(255,107,107,.45);
+  transition:all .2s ease;
+  margin-top:8px;
+  letter-spacing:2px
+}
+
+.btn-cover:active{transform:scale(.95);box-shadow:0 3px 12px rgba(255,107,107,.35)}
+
+.cover-tagline{
+  font-size:1rem;
+  color:var(--text-light);
+  margin-top:4px
+}
+
 /* === SCREENS === */
 .screen{
   height:100%;

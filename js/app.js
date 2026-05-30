@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   Screens.init(container);
   GameAudio.init();
 
-  Screens.render('recipes');
+  Screens.render('cover');
 
   function initAudio() {
     GameAudio.ensureResumed();
@@ -21,6 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const action = target.dataset.action;
 
     switch (action) {
+      case 'start-game': {
+        GameState.goToRecipes();
+        Screens.render('recipes');
+        GameAudio.tap();
+        break;
+      }
       case 'select-recipe': {
         GameState.selectRecipe(target.dataset.recipeId);
         Screens.render('servings');

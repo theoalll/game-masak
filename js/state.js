@@ -1,5 +1,5 @@
 const GameState = {
-  screen: 'recipes',
+  screen: 'cover',
   selectedRecipeId: null,
   servings: 1,
   currentIngredientIndex: 0,
@@ -33,6 +33,10 @@ const GameState = {
     const ingredient = this.getCurrentIngredient();
     if (!ingredient) return 10;
     return Math.max(5, Math.round(ingredient.weight / 50) * 5);
+  },
+
+  goToRecipes() {
+    this.screen = 'recipes';
   },
 
   selectRecipe(id) {
@@ -104,7 +108,7 @@ const GameState = {
   },
 
   reset() {
-    this.screen = 'recipes';
+    this.screen = 'cover';
     this.selectedRecipeId = null;
     this.servings = 1;
     this.currentIngredientIndex = 0;

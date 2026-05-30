@@ -8,11 +8,43 @@ const Screens = {
 
   render(screenName) {
     switch (screenName) {
+      case 'cover': this.renderCover(); break;
       case 'recipes': this.renderRecipes(); break;
       case 'servings': this.renderServings(); break;
       case 'weighing': this.renderWeighing(); break;
       case 'complete': this.renderComplete(); break;
     }
+  },
+
+  renderCover() {
+    const foodEmojis = ['\u{1F373}', '\u{1F95E}', '\u{1F34A}', '\u{1F96A}', '\u{1F957}', '\u{1F34C}', '\u{1F35A}', '\u{1F36B}'];
+    const floaters = foodEmojis.map((emoji, i) => {
+      const x = 10 + Math.random() * 80;
+      const delay = Math.random() * 3;
+      const dur = 3 + Math.random() * 3;
+      return `<span class="cover-floater" style="left:${x}%;animation-delay:${delay}s;animation-duration:${dur}s">${emoji}</span>`;
+    }).join('');
+
+    this.container.innerHTML = `
+      <div class="screen cover-screen">
+        <div class="cover-floaters">${floaters}</div>
+        <div class="screen-inner cover-inner">
+          <div class="cover-content">
+            <div class="cover-emojis">
+              <span class="cover-icon">\u{1F373}</span>
+              <span class="cover-icon main">\u{1F95E}</span>
+              <span class="cover-icon">\u{1F964}</span>
+            </div>
+            <h1 class="cover-title">Dapur Masak</h1>
+            <p class="cover-subtitle">Belajar Menimbang Bahan Makanan</p>
+            <button class="btn-cover" data-action="start-game">
+              Mulai!
+            </button>
+            <p class="cover-tagline">Ayo masak makanan favoritmu!</p>
+          </div>
+        </div>
+      </div>
+    `;
   },
 
   renderRecipes() {
