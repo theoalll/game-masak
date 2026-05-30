@@ -29,6 +29,12 @@ const GameState = {
     return this.getScaledIngredients().length;
   },
 
+  getStep() {
+    const ingredient = this.getCurrentIngredient();
+    if (!ingredient) return 10;
+    return Math.max(5, Math.round(ingredient.weight / 50) * 5);
+  },
+
   selectRecipe(id) {
     this.selectedRecipeId = id;
     this.screen = 'servings';

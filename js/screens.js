@@ -118,14 +118,27 @@ const Screens = {
 
     this.weighingComplete = false;
 
+    const recipe = GameState.getSelectedRecipe();
     const total = GameState.getTotalIngredients();
     const current = GameState.currentIngredientIndex + 1;
     const target = ingredient.weight;
     const curWeight = GameState.currentWeight;
+    const step = GameState.getStep();
+    const servings = GameState.servings;
+    const baseIngredient = recipe.ingredients[GameState.currentIngredientIndex];
+    const baseWeight = baseIngredient.weight;
+
     const progress = Math.min((curWeight / target) * 100, 100);
     const isOver = curWeight > target;
     const isExact = curWeight === target && target > 0;
     const progressClass = isExact ? 'exact' : isOver ? 'over' : '';
+
+    let eduHtml = `<span class="edu-base">1 porsi: <strong>${baseWeight}</strong> gram</span>`;
+    if (servings > 1) {
+      const parts = [];
+      for (let i = 0; i < servings; i++) parts.push(baseWeight);
+      eduHtml += `<span class="edu-scaled">${servings} porsi: ${parts.join(' + ')} = <strong>${target}</strong> gram</span>`;
+    }
 
     const instrIndex = Math.floor(Math.random() * INSTRUCTION_TEMPLATES.length);
     const instruction = INSTRUCTION_TEMPLATES[instrIndex]
@@ -144,6 +157,9 @@ const Screens = {
               <span class="ingredient-emoji">${ingredient.emoji}</span>
               <span class="ingredient-name">${ingredient.name}</span>
             </div>
+            <div class="edu-box">
+              ${eduHtml}
+            </div>
             <div class="scale-body">
               <div class="progress-section">
                 <div class="progress-bar-container">
@@ -160,11 +176,13 @@ const Screens = {
             </div>
             <div class="instruction-text">${instruction}</div>
             <div class="weight-buttons">
-              <button class="btn-weight btn-minus" data-action="adjust-weight" data-delta="-10">
-                <span>&minus;</span>
+              <button class="btn-weight btn-minus" data-action="adjust-weight" data-delta="-${step}">
+                <span class="btn-sym">&minus;</span>
+                <span class="btn-step">${step}g</span>
               </button>
-              <button class="btn-weight btn-plus" data-action="adjust-weight" data-delta="10">
-                <span>+</span>
+              <button class="btn-weight btn-plus" data-action="adjust-weight" data-delta="${step}">
+                <span class="btn-sym">+</span>
+                <span class="btn-step">${step}g</span>
               </button>
             </div>
           </div>
@@ -174,7 +192,8 @@ const Screens = {
 
     this.setupLongPress(
       this.container.querySelector('.btn-minus'),
-      this.container.querySelector('.btn-plus')
+      this.container.querySelector('.btn-plus'),
+      step
     );
   },
 
@@ -240,7 +259,7 @@ const Screens = {
     }, 1500);
   },
 
-  setupLongPress(minusBtn, plusBtn) {
+  setupLongPress(minusBtn, plusBtn, step = 10) {
     const self = this;
 
     function createHandler(delta) {
@@ -284,7 +303,7 @@ const Screens = {
     }
 
     if (minusBtn) {
-      const mh = createHandler(-10);
+      const mh = createHandler(-step);
       minusBtn.addEventListener('mousedown', mh.start);
       minusBtn.addEventListener('touchstart', mh.start, { passive: false });
       minusBtn.addEventListener('mouseup', mh.stop);
@@ -294,7 +313,7 @@ const Screens = {
     }
 
     if (plusBtn) {
-      const ph = createHandler(10);
+      const ph = createHandler(step);
       plusBtn.addEventListener('mousedown', ph.start);
       plusBtn.addEventListener('touchstart', ph.start, { passive: false });
       plusBtn.addEventListener('mouseup', ph.stop);
