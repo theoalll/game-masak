@@ -39,6 +39,20 @@ const GameAudio = {
     this.playNote(880, 0.08, 'sine', 0.12);
   },
 
+  pop() {
+    this.playNote(1100, 0.05, 'sine', 0.06);
+  },
+
+  page() {
+    this.playNote(523, 0.08, 'sine', 0.1);
+    setTimeout(() => this.playNote(784, 0.12, 'sine', 0.12), 80);
+  },
+
+  error() {
+    this.playNote(440, 0.15, 'triangle', 0.12);
+    setTimeout(() => this.playNote(330, 0.25, 'triangle', 0.1), 120);
+  },
+
   success() {
     this.playNote(523, 0.15, 'sine', 0.2);
     setTimeout(() => this.playNote(659, 0.15, 'sine', 0.2), 120);

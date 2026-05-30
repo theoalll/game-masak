@@ -24,13 +24,13 @@ document.addEventListener('DOMContentLoaded', () => {
       case 'start-game': {
         GameState.goToRecipes();
         Screens.render('recipes');
-        GameAudio.tap();
+        GameAudio.page();
         break;
       }
       case 'select-recipe': {
         GameState.selectRecipe(target.dataset.recipeId);
         Screens.render('servings');
-        GameAudio.tap();
+        GameAudio.page();
         break;
       }
       case 'back-to-recipes': {
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
       case 'start-weighing': {
         GameState.startWeighing();
         Screens.render('weighing');
-        GameAudio.tap();
+        GameAudio.page();
         break;
       }
       case 'adjust-weight': {
@@ -74,8 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       case 'choose-other': {
         GameState.reset();
-        Screens.render('recipes');
-        GameAudio.tap();
+        Screens.render('cover');
+        GameAudio.page();
         break;
       }
     }

@@ -292,7 +292,7 @@ const Screens = {
       void scaleBody.offsetWidth;
       scaleBody.classList.add('shake');
     }
-    GameAudio.tap();
+    GameAudio.error();
   },
 
   showSuccessOverlay() {
@@ -344,7 +344,7 @@ const Screens = {
 
         GameState.adjustWeight(delta);
         self.updateWeighingDisplay();
-        GameAudio.tap();
+        GameAudio.pop();
 
         interval = setInterval(() => {
           if (self.weighingComplete) {
@@ -354,7 +354,7 @@ const Screens = {
           }
           GameState.adjustWeight(delta);
           self.updateWeighingDisplay();
-          GameAudio.tap();
+          GameAudio.pop();
         }, 150);
       };
 
