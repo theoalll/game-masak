@@ -160,20 +160,24 @@ const Screens = {
             <div class="edu-box">
               ${eduHtml}
             </div>
-            <div class="scale-body">
-              <div class="progress-section">
+            <div class="scale-body" id="scale-body">
+              <div class="scale-platform">
+                <span class="platform-bowl">${ingredient.emoji}</span>
+              </div>
+              <div class="scale-screen">
+                <div class="screen-weight-row">
+                  <span class="weight-value" id="weight-display">${curWeight}</span>
+                  <span class="weight-unit">gram</span>
+                </div>
                 <div class="progress-bar-container">
                   <div class="progress-bar-fill ${progressClass}" style="width: ${progress}%"></div>
                 </div>
-              </div>
-              <div class="target-label">
-                Target: <span class="target-val">${target}</span> gram
-              </div>
-              <div class="scale-display">
-                <span class="weight-value" id="weight-display">${curWeight}</span>
-                <span class="weight-unit">gram</span>
+                <div class="screen-target-row">
+                  Target: <span class="target-val">${target}</span> gram
+                </div>
               </div>
             </div>
+            <div class="feedback-message" id="feedback-msg"></div>
             <div class="instruction-text">${instruction}</div>
             <div class="weight-buttons">
               <button class="btn-weight btn-minus" data-action="adjust-weight" data-delta="-${step}">
@@ -185,6 +189,9 @@ const Screens = {
                 <span class="btn-step">${step}g</span>
               </button>
             </div>
+            <button class="btn-confirm" data-action="confirm-ingredient">
+              Masukkan Bahan!
+            </button>
           </div>
         </div>
       </div>
@@ -203,6 +210,7 @@ const Screens = {
 
     const weightDisplay = this.container.querySelector('#weight-display');
     const progressFill = this.container.querySelector('.progress-bar-fill');
+    const scaleBody = this.container.querySelector('#scale-body');
     if (!weightDisplay || !progressFill) return;
 
     const target = ingredient.weight;
@@ -215,12 +223,44 @@ const Screens = {
     weightDisplay.style.transform = 'scale(1.3)';
     setTimeout(() => { weightDisplay.style.transform = 'scale(1)'; }, 150);
 
+    weightDisplay.style.color = isExact ? '#00ff88' : isOver ? '#ff8844' : '#00ff88';
+    if (scaleBody) scaleBody.classList.remove('shake');
+
     progressFill.style.width = `${progress}%`;
     progressFill.className = 'progress-bar-fill' + (isExact ? ' exact' : isOver ? ' over' : '');
+  },
 
-    if (isExact) {
+  handleConfirm() {
+    if (this.weighingComplete) return;
+
+    if (GameState.isWeightCorrect()) {
       this.showSuccessOverlay();
+    } else {
+      this.showIncorrectFeedback();
     }
+  },
+
+  showIncorrectFeedback() {
+    const msgs = [
+      'Hampir! Coba lagi \u{2728}',
+      'Belum pas, atur lagi dulu!',
+      'Aduh, kurang tepat. Coba lagi ya!',
+      'Belum sampai, geser lagi!',
+    ];
+    const msg = msgs[Math.floor(Math.random() * msgs.length)];
+    const el = this.container.querySelector('#feedback-msg');
+    const scaleBody = this.container.querySelector('#scale-body');
+    if (el) {
+      el.textContent = msg;
+      el.classList.add('show');
+      setTimeout(() => el.classList.remove('show'), 2000);
+    }
+    if (scaleBody) {
+      scaleBody.classList.remove('shake');
+      void scaleBody.offsetWidth;
+      scaleBody.classList.add('shake');
+    }
+    GameAudio.tap();
   },
 
   showSuccessOverlay() {
@@ -274,21 +314,15 @@ const Screens = {
         self.updateWeighingDisplay();
         GameAudio.tap();
 
-        if (self.weighingComplete) return;
-
         interval = setInterval(() => {
           if (self.weighingComplete) {
             clearInterval(interval);
             interval = null;
             return;
           }
-          const done = GameState.adjustWeight(delta);
+          GameState.adjustWeight(delta);
           self.updateWeighingDisplay();
           GameAudio.tap();
-          if (done || self.weighingComplete) {
-            clearInterval(interval);
-            interval = null;
-          }
         }, 150);
       };
 

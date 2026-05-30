@@ -56,13 +56,11 @@ const GameState = {
 
   adjustWeight(delta) {
     const ingredient = this.getCurrentIngredient();
-    if (!ingredient) return false;
+    if (!ingredient) return;
     const newWeight = this.currentWeight + delta;
-    if (newWeight < 0) return false;
-    if (newWeight > ingredient.weight * 2) return false;
+    if (newWeight < 0) return;
     this.currentWeight = newWeight;
     this.totalAdjustments++;
-    return this.isWeightCorrect();
   },
 
   isWeightCorrect() {

@@ -56,6 +56,10 @@ document.addEventListener('DOMContentLoaded', () => {
       case 'adjust-weight': {
         break;
       }
+      case 'confirm-ingredient': {
+        Screens.handleConfirm();
+        break;
+      }
       case 'replay': {
         GameState.resetSameRecipe();
         Screens.render('servings');
